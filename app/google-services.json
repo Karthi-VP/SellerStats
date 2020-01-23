@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "145854151953",
+    "firebase_url": "https://sellerstats-android.firebaseio.com",
+    "project_id": "sellerstats-android",
+    "storage_bucket": "sellerstats-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:145854151953:android:815ad2aedbcec519",
+        "android_client_info": {
+          "package_name": "com.valleypointtechnologies.sellerstats"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "145854151953-ucjneghbvktu8tjuie5r70b8rhij8ifj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQlWixO9ThSUxOj8OsN-ZNno__srn9yiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "145854151953-ucjneghbvktu8tjuie5r70b8rhij8ifj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

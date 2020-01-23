@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Security-Policy" content="img-src * 'self' data:; default-src * 'self' gap: wss: ws: ; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval';">
+        <meta name="viewport" content="viewport-fit=cover, initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
+        
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+            
+        <title>SellerStats</title>
+        
+        <!-- Custom style sheet -->
+        <link rel="stylesheet" href="css/custom_style.css">
+        
+    </head>
+    <body>
+        <div class="loader invisible"></div>
+        <div id="mySidenav" class="sidenav"></div>
+        <div class="container-fluid">
+            <div class="menu_container_sub">
+                <div class="share_opt" onclick="shareOption()">
+                    <img src="img/share_icon.png" class=""> Share
+                </div>
+                <div class="row top_menu">
+                    <div class="col-2 back_btn p-0" onclick="window.history.go(-1); return false;">
+                        <img src="img/back_arrow.png" class="mr-3"/>
+                    </div>
+                    <div class="col-6 p-0">
+                        <h4 class="text-white"> Inventory levels </h4>
+                    </div>
+                    <div class="col-4 text-right p-0">
+                        <img src="img/setting_icon.png" class="mr-3" onclick="javascript:location.href='select_store.html'"/>
+                        <img src="img/menu_icon.png" onclick="openNav()"/>
+                    </div>
+                </div>
+            </div>
+            <div class="product_container">
+                <div class="mb-4 product_list" id="lowInventory_list"></div>
+            </div>
+        </div>
+        
+        <script src="js/jquery-3.3.1.slim.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        
+        <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/pulltorefresh.js"></script>
+        
+        <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/API/config.js"></script>
+        <script type="text/javascript" src="js/API/low_inventory.js"></script>
+        <script type="text/javascript">
+            document.addEventListener("deviceready", onDeviceready, false);
+            
+            function onDeviceready(){
+                
+                //Using this button select based on dashboard page
+                var selectVal = window.localStorage.getItem("selected_val")
+                
+                if(selectVal !== ""){
+                    
+                    var selected_opt = window.localStorage.getItem("selected_opt")
+                    
+                    if(selected_opt != null && selected_opt != ""){
+                        
+                        if(selected_opt == "sales"){
+                            $(".top_btn_option button:nth-child(1)").addClass("btn_active_1")
+                        }else if(selected_opt == "units"){
+                            $(".top_btn_option button:nth-child(2)").addClass("btn_active_1")
+                        }
+                        
+                    }else{
+                        
+                        $(".top_btn_option button:nth-child(1)").addClass("btn_active_1")
+                        selected_opt = "sales"
+                        
+                    }
+                    
+                    getSalesDetailsInfo(selected_opt, selectVal, "", "");
+                    
+                }else{
+                    
+                    var selected_opt = window.localStorage.getItem("selected_opt")
+                    
+                    if(selected_opt != null && selected_opt != ""){
+                        if(selected_opt == "sales"){
+                            $(".top_btn_option button:nth-child(1)").addClass("btn_active_1")
+                        }else if(selected_opt == "units"){
+                            $(".top_btn_option button:nth-child(2)").addClass("btn_active_1")
+                        }
+                    }else{
+                        $(".top_btn_option button:nth-child(1)").addClass("btn_active_1")
+                        selected_opt = "sales"
+                    }
+                    
+                    getSalesDetailsInfo(selected_opt, "day", "", "");
+                }
+            }
+        </script>
+    </body>
+</html>

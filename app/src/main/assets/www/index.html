@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Security-Policy" content="img-src *">
+        <meta name="viewport" content="viewport-fit=cover, initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
+                
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.css">
+            
+        <title>SellerStats</title>
+        
+        <!-- Custom style sheet -->
+        <link rel="stylesheet" href="css/custom_style.css">
+            
+    </head>
+    <body class="full_bg">
+        <div class="container">
+            <div class="text-center">
+                <img src="img/ss_logo_icon.png" class="ss_logo_page1"/>
+            </div>
+            <div class="text-center">
+                <img src="img/seller-stats-icon.png" class="ss_icon"/>
+            </div>
+            <div class="btn_list_page1">
+                <a class="btn btn-primary btn-lg btn-block mb-3" href="sign_up.html" role="button">JOIN US</a>
+                <a class="btn btn-primary btn-lg btn-block" href="sign_in.html" role="button">SIGN IN</a>
+            </div>
+        </div>
+        
+        <script src="js/jquery-3.3.1.slim.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/API/config.js"></script>
+        <script type="text/javascript" src="js/API/user_login.js"></script>
+        <script type="text/javascript">
+            document.addEventListener("deviceready", onDeviceready, false);
+            
+            function onDeviceready(){
+                
+                var userValid      = check_user_loginState()
+                var account_status = window.localStorage.getItem("account_status")
+                
+                if(userValid != "" && userValid != null){
+                    
+                    if(account_status == "Confirmed" || account_status  == null){
+                        location.replace("add_store.html?option=newStore")
+                    }else{
+                        location.replace("dashboard.html")
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Security-Policy" content="img-src *">
+        <meta name="viewport" content="viewport-fit=cover, initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
+                
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+            
+        <title>SellerStats</title>
+        
+        <!-- Custom style sheet -->
+        <link rel="stylesheet" href="css/custom_style.css">
+            
+    </head>
+    <body>
+        <div class="loader invisible"></div>
+        <div id="mySidenav" class="sidenav"></div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="graph_bg">
+                    <!--<div id="info_msg_container" class="info_msg alert alert-warning alert-dismissible d-none" role="alert">
+                        To calculate profit please upload product cost in <a href="https://www.sellerstats.net" class="alert-link">www.sellerstats.net</a>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>-->
+                    <div class="share_opt" onclick="shareOption()">
+                        <img src="img/share_icon.png" class=""> Share
+                    </div>
+                    <div class="state_selOpt_container" id="selStateOpt"></div>
+                    
+                    <div class="top_menu my-4 clearfix">
+                        <div class="col-8 text-left float-left px-2">
+                            <h5 class="text-white selStoreName"></h5>
+                        </div>
+                        <div class="col-4 float-left text-right px-2">
+                            <img src="img/setting_icon.png" class="mr-3" onclick="javascript:location.href='select_store.html'">
+                            <img src="img/menu_icon.png" onclick="openNav()">
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3 clearfix">
+                        <div class="w-30 btn_group_left float-left">
+                            <a class="btn mb-3" href="#" role="button" onclick="totalSalesDetails(this,'day')">TODAY</a>
+                            <a class="btn" href="#" role="button" onclick="totalSalesDetails(this,'yesterday')">YESTERDAY</a>
+                        </div>
+                        <div class="w-40 today_sale_rec">
+                            <span>Total Sale</span>
+                            <span class="d-block h4" id="total_sale_val"></span>
+                        </div>
+                        <div class="w-30 btn_group_right float-right">
+                            <a class="btn mb-3" href="#" role="button" onclick="totalSalesDetails(this,'week')">7 DAYS</a>
+                            <!--<a class="btn" href="#" role="button" onclick="totalSalesDetails(this,'month')">30 DAYS</a>-->
+                            <select class="btn" id="advance_option" onchange="select_optBtn(this)">
+                                <option value="advance" disabled selected>Advance</option>
+                                <option value="month">30 Days</option>
+                                <option value="quarter">3 Month</option>
+                                <option value="half">6 Month</option>
+                                <option value="year">1 Year</option>
+                                <option value="custom">Custom</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3 clearfix text-center text-white sales_card" id="sales_card"></div>
+                    
+                    <div class="mt-3 chart_data" id="chart_data_info"></div>
+                </div>
+
+                <div class="clearfix w-100 m-3 todayBest_sellerList">
+                    <h5 class="border-bottom pb-3">Today's Best Seller</h5>
+                    <ul class="list-unstyled" id="top_sellers"></ul>
+                    <div class="border-bottom clearfix pb-3">
+                        <a class="btn float-right" href="product_list.html" role="button">View More<i class="fa fa-caret-right ml-2" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+
+                <div class="clearfix w-100 m-3 lowOnInventoryList">
+                    <h5 class="border-bottom pb-3"> Low On Inventory </h5>
+                    <ul class="list-unstyled" id="top_lowInventory"></ul>
+                    <div class="border-bottom clearfix pb-3">
+                        <a class="btn float-right" href="low_inventory.html" role="button">View More<i class="fa fa-caret-right ml-2" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                
+                <div class="row col-lg-12 m-3 p-0 dataStatusList"></div>
+                
+                <div class="clearfix w-100 m-3 todaySales_recordSales">
+                    <h5 class="border-bottom pb-3">Today's Sales Vs Record Daily Sales</h5>
+                    <div class="w-50 float-left text-center" id="chart_dailyTarget_unit"></div>
+                    <div class="w-50 float-left text-center" id="chart_dailyTarget_sales"></div>
+                </div>
+                
+                <!-- Trigger the modal with a button -->
+                <button type="button" id="custom_date_modalbox" class="btn btn-info btn-lg d-none" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false">Open Modal</button>
+                
+                <!-- Modal -->
+                <div class="modal fade mt-5" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+                        
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Select custom date</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="start_date" class="small">Start Date</label>
+                                    <input type="date" class="form-control" id="start_date" name="start_date" placeholder="" onchange="validateDate()">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="end_date" class="small">End Date</label>
+                                    <input type="date" class="form-control" id="end_date" name="end_date" placeholder=""  onchange="validateDate()">
+                                </div>
+                            </div>
+                            <div class="modal-footer close_modal_btn" style="display: none;">
+                                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="selectedCustomDate()">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <script src="js/jquery-3.3.1.slim.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        
+        <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/momentjs.js"></script>
+        <!-- Highchart -->
+        <script src="js/highcharts.js"></script>
+        <script src="js/highcharts-more.js"></script>
+        <script src="js/no-data-to-display.js"></script>
+        <script src="js/solid-gauge.js"></script>
+        
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/API/config.js"></script>
+        <script type="text/javascript" src="js/API/dashboard.js"></script>
+        <script type="text/javascript">
+            document.addEventListener("deviceready", onDeviceready, false);
+            
+            function onDeviceready(){
+                             
+                var selectVal = window.localStorage.getItem("selected_val")
+                
+                if(selectVal !== null && selectVal !== ""){
+                    
+                    if(selectVal == "day"){
+                        $(".btn_group_left a:nth-child(1)").addClass("btn_active")
+                        loadDefaultAdvanceBtn();
+                    }else if(selectVal == "yesterday"){
+                        $(".btn_group_left a:nth-child(2)").addClass("btn_active")
+                        loadDefaultAdvanceBtn();
+                    }else if(selectVal == "week"){
+                        $(".btn_group_right a:nth-child(1)").addClass("btn_active")
+                        loadDefaultAdvanceBtn();
+                    }else{
+                        
+                        var month       = ""
+                        var three_month = ""
+                        var six_month   = ""
+                        var one_year    = ""
+                        var custom_date = ""
+                        var default_opt = ""
+
+                        switch (selectVal) {
+                            case 'month':
+                                month = "selected"
+                                break;
+                            case 'quarter':
+                                three_month = "selected"
+                                break;
+                            case 'half':
+                                six_month = "selected"
+                                break;
+                            case 'year':
+                                one_year = "selected"
+                                break;
+                            case 'custom':
+                                custom_date = "selected"
+                                break;
+                            default:
+                                default_opt = "selected"
+                        }
+
+                        var option = '  <option value="" disabled '+ default_opt +'>Advance</option>\
+                                        <option value="month" '+ month +'>30 Days</option>\
+                                        <option value="quarter" '+ three_month +'>3 Month</option>\
+                                        <option value="half" '+ six_month +'>6 Month</option>\
+                                        <option value="year" '+ one_year +'>1 Year</option>\
+                                        <option value="custom" '+ custom_date +'>Custom</option>'
+
+
+                        $("#advance_option").html(option)
+
+                        $(".btn_group_right select").addClass("btn_active")
+                    }
+                    
+                }else{
+                    
+                    //Using this product list page button select option
+                    window.localStorage.setItem("selected_val", "day")
+                    
+                    $(".btn_group_left a:nth-child(1)").addClass("btn_active")
+                    
+                    selectVal = "day"
+                }
+                
+                //Select Option not available so empty option value
+                window.localStorage.setItem("selected_opt", "")
+                
+                getDashboardWidget(selectVal,"");
+                
+                //Get Chart Data
+                getChartData();
+                
+            }
+        </script>
+    </body>
+</html>

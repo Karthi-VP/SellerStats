@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Security-Policy" content="img-src *">
+        <meta name="viewport" content="viewport-fit=cover, initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
+                
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+            
+        <title>SellerStats</title>
+        
+        <!-- Custom style sheet -->
+        <link rel="stylesheet" href="css/custom_style.css">
+            
+    </head>
+    <body>
+        <div id="mySidenav" class="sidenav"></div>
+        <div class="container-fluid">
+            <div class="menu_container_sub">
+                <div class="row top_menu">
+                    <div class="col-2 back_btn p-0" onclick="window.history.go(-1); return false;">
+                        <img src="img/back_arrow.png" class="mr-3"/>
+                    </div>
+                    <div class="col-6 p-0">
+                        <h4 class="text-white">Store Info</h4>
+                    </div>
+                    <div class="col-4 text-right p-0">
+                        <img src="img/setting_icon.png" class="mr-3" onclick="javascript:location.href='select_store.html'"/>
+                        <img src="img/menu_icon.png" onclick="openNav()"/>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-4 after_form_group product_container">
+                <form id="account_setting">
+                    <input type="hidden" name="id" id="store_id" value=""/>
+                    
+                    <div class="form-group">
+                        <label for="store_name">Store Name</label>
+                        <input type="email" class="form-control" id="store_name" name="store_name" placeholder="">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fulfillment_type">Type</label>
+                        <select class="form-control" id="fulfillment_type" name="type"></select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="market_place">Market Place</label>
+                        <select class="form-control" id="market_place" name="market_place"></select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="seller_id">Seller ID</label>
+                        <input type="text" class="form-control" id="seller_id" name="seller_id" placeholder="">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="access_key">Access Key</label>
+                        <input type="text" class="form-control" id="access_key" name="access_key" placeholder="">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="secret_key">Secret Key</label>
+                        <input type="text" class="form-control" id="secret_key" name="secret_key" placeholder="">
+                    </div>
+                    
+                    <div class="btn_list_page3 mt-5">
+                        <a class="btn btn-primary btn-lg btn-block" onclick="updateAccountSetting()" role="button">SUBMIT</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <script src="js/jquery-3.3.1.slim.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        
+        <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/API/config.js"></script>
+        <script type="text/javascript" src="js/API/setting.js"></script>
+        <script type="text/javascript">
+            document.addEventListener("deviceready", onDeviceready, false);
+            
+            function onDeviceready(){
+                
+                //getAccountOption();
+                var storeID = window.localStorage.getItem("storeID")
+                
+                if(storeID != ""){
+                    $("#store_id").val(storeID)
+                }else{
+                    var store_id = loginResponse.store_ids[0]
+                    $("#store_id").val(store_id)
+                }
+                
+                loadAccountSetting(storeID)
+            }
+        
+        </script>
+    </body>
+</html>
